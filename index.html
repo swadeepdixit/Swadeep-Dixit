@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Swadeep Dixit Import Export</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: #fff;
+      border-bottom: 3px solid #ffd700;
+      padding: 1rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #ffd700;
+      letter-spacing: 2px;
+      cursor: default;
+      user-select: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-links button {
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+      color: #444;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .nav-links button:hover,
+    .nav-links button.active {
+      background-color: #ffd700;
+      color: #222;
+      font-weight: 700;
+      box-shadow: 0 2px 10px rgb(255 215 0 / 0.5);
+    }
+
+    main {
+      flex-grow: 1;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      width: 100%;
+    }
+
+    section {
+      display: none;
+      animation: fadeInSection 0.8s ease;
+    }
+    section.active {
+      display: block;
+    }
+    @keyframes fadeInSection {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Home */
+    #home h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #ffd700;
+      text-align: center;
+    }
+
+    #home p.subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 0.5rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+
+    #home .intro-image {
+      width: 100%;
+      max-height: 270px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgb(255 215 0 / 0.3);
+      margin-bottom: 2rem;
+    }
+
+    /* Products */
+    #products h2 {
+      color: #ffd700;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+      gap: 1.2rem;
+      justify-items: center;
+    }
+
+    .product-card {
+      background: #fffbea;
+      border: 2px solid #ffd700;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 3px 8px rgb(255 215 0 / 0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s ease;
+      cursor: default;
+      max-width: 180px;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgb(255 215 0 / 0.5);
+    }
+    .product-card img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 0.8rem;
+    }
+    .product-card h3 {
+      margin-bottom: 0.5rem;
+      color: #444;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .product-card p {
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.3;
+    }
+
+    /* About Us */
+    #about h2 {
+      color: #ffd700;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    #about p {
+      line-height: 1.5;
+      max-width: 700px;
+      margin: 0 auto 1rem auto;
+      color: #444;
+      font-size: 1rem;
+      text-align: justify;
+    }
+    #about p:last-child {
+      margin-top: 0.5rem;
+      font-style: italic;
+      color: #777;
+      text-align: center;
+    }
+
+    /* Services */
+    #services h2 {
+      color: #ffd700;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    #services p {
+      max-width: 700px;
+      margin: 0 auto 1rem auto;
+      font-size: 1rem;
+      color: #555;
+      text-align: center;
+      line-height: 1.4;
+    }
+    .services-list {
+      max-width: 700px;
+      margin: 0 auto;
+      list-style: none;
+      padding-left: 0;
+    }
+    .services-list li {
+      background: #fffbea;
+      border-left: 5px solid #ffd700;
+      margin: 0.8rem 0;
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      color: #444;
+      box-shadow: 0 2px 8px rgb(255 215 0 / 0.3);
+      border-radius: 6px;
+    }
+
+    /* Contact Us */
+    #contact h2 {
+      color: #ffd700;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto 1rem auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input, textarea {
+      padding: 0.7rem 1rem;
+      border: 2px solid #ffd700;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #e6c200;
+      background-color: #fff9c4;
+    }
+    button.submit-btn {
+      background-color: #ffd700;
+      border: none;
+      color: #222;
+      font-weight: 700;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 3px 10px rgb(255 215 0 / 0.7);
+    }
+    button.submit-btn:hover {
+      background-color: #e6c200;
+      box-shadow: 0 5px 15px rgb(230 194 0 / 0.9);
+    }
+    #contact-info {
+      max-width: 400px;
+      margin: 0 auto;
+      font-size: 1rem;
+      color: #444;
+      text-align: center;
+      line-height: 1.5;
+    }
+    #contact-info p {
+      margin: 0.3rem 0;
+    }
+
+    footer {
+      background-color: #fff;
+      border-top: 3px solid #ffd700;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      box-shadow: 0 -2px 5px rgb(0 0 0 / 0.05);
+    }
+    footer .tagline {
+      margin-top: 0.25rem;
+      font-style: italic;
+      color: #999;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .nav-links {
+        gap: 0.6rem;
+      }
+      .nav-links button {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.8rem;
+      }
+    }
+    /* Submission message style */
+    .form-message {
+      text-align: center;
+      font-weight: 600;
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
+      color: green;
+    }
+    .form-error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo" aria-label="Company Logo">Swadeep Dixit</div>
+      <div class="nav-links" role="navigation" aria-label="Primary Navigation">
+        <button type="button" class="nav-btn active" data-target="home" aria-current="page">Home</button>
+        <button type="button" class="nav-btn" data-target="about">About Us</button>
+        <button type="button" class="nav-btn" data-target="products">Products</button>
+        <button type="button" class="nav-btn" data-target="services">Services</button>
+        <button type="button" class="nav-btn" data-target="contact">Contact Us</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="active" aria-label="Homepage">
+      <h1>Welcome to Swadeep Dixit</h1>
+      <p class="subtitle">Your trusted partner in quality rice and milk import and export services. Delivering fresh and premium products worldwide with integrity and efficiency.</p>
+      <p class="subtitle">Connecting Markets, Nourishing Lives.</p>
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80" alt="Cargo ship at port symbolizing import export business" class="intro-image" />
+    </section>
+
+    <section id="about" aria-label="About Us">
+      <h2>About Us</h2>
+      <p>
+        Swadeep Dixit is a renowned name in the import-export industry specializing in rice and milk products. With over 15 years of experience, we are committed to providing high-quality goods sourced ethically and distributed efficiently globally.
+        Our mission is to foster strong trade relationships and bring trusted nourishment to every corner of the world.
+      </p>
+      <p>
+        We pride ourselves on our dedication to quality, customer satisfaction, and sustainable business practices. Our team of experts ensures smooth logistics, timely delivery, and transparent communication, making us a reliable partner for businesses worldwide.
+      </p>
+      <p>
+        Join us on our journey as we expand horizons and create value for our clients, partners, and communities alike.
+      </p>
+      <p>Committed to excellence, driven by trust.</p>
+    </section>
+
+    <section id="products" aria-label="Products">
+      <h2>Our Products</h2>
+      <div class="products-grid" role="list">
+        <article class="product-card" role="listitem">
+          <img src="https://img.icons8.com/ios/100/ffd700/rice-bowl.png" alt="Rice" />
+          <h3>Rice</h3>
+          <p>Premium quality rice varieties sourced from best farms, ensuring freshness and taste.</p>
+        </article>
+        <article class="product-card" role="listitem">
+          <img src="https://img.icons8.com/ios/100/ffd700/milk-bottle.png" alt="Milk" />
+          <h3>Milk</h3>
+          <p>Pure and fresh milk products, transported and stored with utmost care for quality.</p>
+        </article>
+        <article class="product-card" role="listitem">
+          <img src="https://img.icons8.com/ios/100/ffd700/corn.png" alt="Maize" />
+          <h3>Maize</h3>
+          <p>High-quality maize, sourced and exported to meet diverse industrial and food requirements.</p>
+        </article>
+        <article class="product-card" role="listitem">
+          <img src="https://img.icons8.com/ios/100/ffd700/firewood-bundle.png" alt="Dung Cake" />
+          <h3>Dung Cake</h3>
+          <p>Organic dung cakes perfect for fuel and agricultural uses.</p>
+        </article>
+        <article class="product-card" role="listitem">
+          <img src="https://img.icons8.com/ios/100/ffd700/wheat.png" alt="Wheat" />
+          <h3>Wheat</h3>
+          <p>Top-quality wheat grains for food industry and animal feed supply.</p>
+        </article>
+        <article class="product-card" role="listitem">
+          <img src="https://img.icons8.com/ios/100/ffd700/peanut.png" alt="Peanuts" />
+          <h3>Peanuts</h3>
+          <p>Fresh peanuts supplied for food processing and consumption.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="services" aria-label="Services">
+      <h2>Our Services</h2>
+      <p>Offering comprehensive solutions tailored to your import-export needs.</p>
+      <ul class="services-list">
+        <li>Customs clearance and regulatory compliance assistance</li>
+        <li>Worldwide freight forwarding and logistics management</li>
+        <li>Product sourcing and supplier verification</li>
+        <li>Warehousing and distribution solutions</li>
+        <li>Trade consulting and market entry strategies</li>
+      </ul>
+    </section>
+
+    <section id="contact" aria-label="Contact Us">
+      <h2>Contact Us</h2>
+      <form id="contact-form" aria-label="Contact form for inquiries">
+        <input type="text" id="name" name="name" placeholder="Your Full Name" required aria-required="true" />
+        <input type="email" id="email" name="email" placeholder="Email Address" required aria-required="true" />
+        <textarea id="message" name="message" rows="4" placeholder="Your Message" required aria-required="true"></textarea>
+        <button type="submit" class="submit-btn" aria-label="Send message">Send Message</button>
+        <div id="form-message" class="form-message" role="alert" aria-live="polite"></div>
+      </form>
+      <div id="contact-info">
+        <p><strong>Phone:</strong> +91 9827474376</p>
+        <p><strong>Email:</strong> <a href="mailto:swadeepdixit308@gmail.com">swadeepdixit308@gmail.com</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2024 Swadeep Dixit. All rights reserved. Your partner in global trade.
+    <div class="tagline">Connecting the world with quality and trust.</div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Navigation functionality
+      const navButtons = document.querySelectorAll('.nav-btn');
+      const sections = document.querySelectorAll('main section');
+
+      function setActiveSection(targetId) {
+        sections.forEach(section => {
+          if (section.id === targetId) {
+            section.classList.add('active');
+          } else {
+            section.classList.remove('active');
+          }
+        });
+        navButtons.forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.target === targetId);
+          if(btn.dataset.target === targetId){
+            btn.setAttribute('aria-current','page');
+          } else {
+            btn.removeAttribute('aria-current');
+          }
+        });
+      }
+
+      navButtons.forEach(button =>
+        button.addEventListener('click', () => {
+          setActiveSection(button.dataset.target);
+        })
+      );
+
+      // Formspree integration for contact form submission
+      const form = document.getElementById('contact-form');
+      const formMessage = document.getElementById('form-message');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        formMessage.textContent = '';
+        formMessage.classList.remove('form-error');
+        formMessage.classList.remove('form-message');
+
+        const formData = new FormData(form);
+
+        // Replace below URL with your actual Formspree endpoint URL
+        const formspreeEndpoint = 'https://formspree.io/f/myylnkgl'; // Example placeholder
+
+        try {
+          const response = await fetch(formspreeEndpoint, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json'
+            },
+            body: formData
+          });
+
+          if (response.ok) {
+            formMessage.textContent = 'Thank you! Your message has been sent.';
+            formMessage.classList.add('form-message');
+            form.reset();
+          } else {
+            const data = await response.json();
+            if (data && data.errors) {
+              formMessage.textContent = data.errors.map(error => error.message).join(', ');
+            } else {
+              formMessage.textContent = 'Oops! There was a problem submitting your form.';
+            }
+            formMessage.classList.add('form-error');
+          }
+        } catch (error) {
+          formMessage.textContent = 'Oops! There was a problem submitting your form.';
+          formMessage.classList.add('form-error');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
